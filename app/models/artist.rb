@@ -1,4 +1,6 @@
 require 'rapgenius'
+require 'open-uri'
+
 
 class Artist < ActiveRecord::Base
   has_many :artist_songs
@@ -24,12 +26,15 @@ class Artist < ActiveRecord::Base
       # @artist.songs.create(name:)
     end
     # self.create_song!
-    p @artist_songs[:song].first.document["response"]["song"]["bop_url"][/(?<=(\/http))(.*)(?=\?)/].gsub(/%3A/,"http:").gsub(/(%2F)/,"/")
-    puts @artist_songs[:song].first.lines.
+    lyrics_url=@artist_songs[:song].first.document["response"]["song"]["bop_url"][/(?<=(\/http))(.*)(?=\?)/].gsub(/%3A/,"http:").gsub(/(%2F)/,"/")
+    doc = Nokogiri::HTML(open("#{lyrics_url}"))
+    lyrics = doc.css("div.lyrics").to_s.gsub(/<(.|\n)*?>/,"")
+    # puts @artist_songs[:song].first.lines.
 
-    song = @artist_songs[:song].first.lines.map{|line|line.lyric}
-    song.map!{|line| line if [""," [?]",nil,["Intro"],["Verse 1"],["Verse 2"],"[]"].include?(line)!=true}
-    string_song = song.join(",")
+    # song = lyrics.map{|line|line.lyric}
+    # song.map!{|line| line if [""," [?]",nil,["Intro"],["Verse 1"],["Verse 2"],"[]"].include?(line)!=true}
+    # string_song = song.join(",")
+    string_song = lyrics
     string_song.gsub!(/\n/, " ").gsub!(/,/, " ")
     num_hooks = (string_song.scan(/\[Hook]/).length)-1
 

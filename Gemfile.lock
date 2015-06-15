@@ -182,6 +182,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   json
+  nokogiri (~> 1.6.6.2)
   pg
   pry-byebug
   rails (= 4.2.0)
