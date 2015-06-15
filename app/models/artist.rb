@@ -4,16 +4,30 @@ class Artist < ActiveRecord::Base
   has_many :artist_songs
   has_many :songs, :through => :artist_songs, dependent: :destroy
 
-  # RapGenius::Client.access_token = 'Q6RjOeRCD8S3720jq5frKI-YGMDTX0YYHniz5B7RYpQUsfr3uNDdNDlI0_6gq61k'
+  def self.exists?(artist)
+    if Artist.find_by(name:artist) != true
+      current_artist = Artist.create(name:artist)
+    else
+      current_artist = Artist.find_by(name:artist)
+    end
+    self.get_songs!(current_artist.name)
+  end
 
   def self.get_songs!(artist)
-    songs =RapGenius.search(artist)
-    artist_songs=[]
+    RapGenius::Client.access_token = 'xtN_egmb5AUedPvEWYlOR78Vj61nOut2x4dNOESPuyabOu09-ZSuqSbTB15xMaUB'
+    songs = RapGenius.search("ASAP")
+
+    @artist_songs={:artist=>"#{artist}", :song=>[]}
     songs.each do |song|
-      artist_songs << RapGenius::Song.find(song.id)
+      @artist_songs[:song] << RapGenius::Song.find(song.id)
+      # puts rap_song.title
+      # @artist.songs.create(name:)
     end
-    puts artist_songs.length
-    song = artist_songs.first.lines.map{|line|line.lyric}
+    # self.create_song!
+    p @artist_songs[:song].first.document["response"]["song"]["bop_url"][/(?<=(\/http))(.*)(?=\?)/].gsub(/%3A/,"http:").gsub(/(%2F)/,"/")
+    puts @artist_songs[:song].first.lines.
+
+    song = @artist_songs[:song].first.lines.map{|line|line.lyric}
     song.map!{|line| line if [""," [?]",nil,["Intro"],["Verse 1"],["Verse 2"],"[]"].include?(line)!=true}
     string_song = song.join(",")
     string_song.gsub!(/\n/, " ").gsub!(/,/, " ")
@@ -31,6 +45,12 @@ class Artist < ActiveRecord::Base
     words = string_song_collection.uniq
     histogram = words.map{|word| [word.gsub(/\"/,"").to_sym, string_song_collection.count(word)]}.to_h
     sorted = histogram.sort_by{|k,v| v }.reverse
-    sorted.each{|key,value| puts "#{key},#{value}"}
+    puts sorted
   end
+  # def self.create_song!
+  #   @songs.each do |song|
+  #       Song.new(artist_songs.first.lines.map{|line|line.lyric}
+  #   end
+  # end
+
 end
