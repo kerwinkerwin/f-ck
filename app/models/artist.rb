@@ -6,25 +6,33 @@ class Artist < ActiveRecord::Base
   has_many :artist_songs
   has_many :songs, :through => :artist_songs, dependent: :destroy
 
+  after_create :get_songs!
+
+
   def self.exists?(artist)
     if Artist.find_by(name:artist) != true
       current_artist = Artist.create(name:artist)
+      self.get_songs!(current_artist.name)
     else
       current_artist = Artist.find_by(name:artist)
     end
-    self.get_songs!(current_artist.name)
+
   end
 
-  def self.get_songs!(artist)
+  private
+  def get_songs!
     RapGenius::Client.access_token = 'xtN_egmb5AUedPvEWYlOR78Vj61nOut2x4dNOESPuyabOu09-ZSuqSbTB15xMaUB'
-    songs = RapGenius.search("ASAP")
-
-    @artist_songs={:artist=>"#{artist}", :song=>[]}
+    puts self.name
+    songs = RapGenius.search(self.name)
     songs.each do |song|
-      @artist_songs[:song] << RapGenius::Song.find(song.id)
-      # puts rap_song.title
-      # @artist.songs.create(name:)
+      self.songs.create(name:song.title, rg_id:song.id)
+      # artist_songs[:song] << RapGenius::Song.find(song.id)
+      #may need the song name in the hash as well?
     end
+  end
+
+  def self.create_song!
+
     # self.create_song!
     lyrics_url=@artist_songs[:song].first.document["response"]["song"]["bop_url"][/(?<=(\/http))(.*)(?=\?)/].gsub(/%3A/,"http:").gsub(/(%2F)/,"/")
     doc = Nokogiri::HTML(open("#{lyrics_url}"))
