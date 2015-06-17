@@ -21,6 +21,7 @@ class Artist < ActiveRecord::Base
     RapGenius::Client.access_token = 'xtN_egmb5AUedPvEWYlOR78Vj61nOut2x4dNOESPuyabOu09-ZSuqSbTB15xMaUB'
     songs = RapGenius.search(self.name)
     songs.each do |song|
+      ##if rg_id already exists then 
       self.songs.create(name:song.title, rg_id:song.id) if song.title !=nil && song.id !=nil
       # artist_songs[:song] << RapGenius::Song.find(song.id)
     end

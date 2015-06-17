@@ -10,7 +10,8 @@ private
 
 
 def lyric_scraper
-  ##Takes song.id and returns url
+  ##Takes song.id 
+  ##and returns url
   ##uses Nokogiri to scrape and return lyrics along with some
   ##gsub
 end
@@ -21,4 +22,4 @@ def build_lyrics
   # Save lyrics to db
 end
 
-def sor
+def sort_lyrics
