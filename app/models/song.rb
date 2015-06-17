@@ -1,19 +1,20 @@
 class Song < ActiveRecord::Base
   has_many :artist_songs
   has_many :artists, :through => :artist_songs
-  after_create :lyric_scraper
-
 
 end
 
 private
 
+def url
+  ##Takes song.id
+  ##and returns url
+end
 
 def lyric_scraper
-  ##Takes song.id 
-  ##and returns url
   ##uses Nokogiri to scrape and return lyrics along with some
   ##gsub
+
 end
 
 def build_lyrics
@@ -23,3 +24,12 @@ def build_lyrics
 end
 
 def sort_lyrics
+  #sorts lyrics
+end
+
+def create_words
+  #takes lyrics and count array and creates words
+  #so can go Artist.song.words
+  #possibly source association?
+
+end
