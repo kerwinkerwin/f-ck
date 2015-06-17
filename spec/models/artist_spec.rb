@@ -4,11 +4,17 @@ require 'spec_helper'
 RSpec.describe Artist, type: :model do
   context "on creation" do
     # Artist.create(name:'ASAP')
-    it "calls #get_songs callback" do
-      artist= FactoryGirl.create(:artist)
+    it "calls #get_songs callback", tag: [ :db ] do
+
+      artist = FactoryGirl.build(:artist)
+
+      # expected_hash = []
+      # allow(RapGenius).to receive(:song).with(artist.name).and_return(expected_hash)
+      expect{ artist.save }.to change{ artist.songs.count }.from(0).to(1)
+
       #How to test that the after hooks work?
-      allow(artist).to receive(:get_songs!).and_return("songs")
-      expect(artist.get_songs!).to eq("songs")
+      # allow(artist).to receive(:get_songs!).and_return("songs")
+      # expect(artist.get_songs!).to eq("songs")
     end
   end
 
