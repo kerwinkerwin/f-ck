@@ -52,10 +52,19 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     columnize (0.9.0)
+    database_cleaner (1.4.1)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
+    dotenv (2.0.1)
+    dotenv-rails (2.0.1)
+      dotenv (= 2.0.1)
     erubis (2.7.0)
     execjs (2.5.2)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     httparty (0.11.0)
@@ -179,6 +188,9 @@ DEPENDENCIES
   backports (~> 3.6.4)
   byebug
   coffee-rails (~> 4.1.0)
+  database_cleaner (~> 1.4.1)
+  dotenv-rails
+  factory_girl_rails (~> 4.0)
   jbuilder (~> 2.0)
   jquery-rails
   json

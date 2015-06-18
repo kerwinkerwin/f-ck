@@ -5,26 +5,25 @@ require 'open-uri'
 class Artist < ActiveRecord::Base
   has_many :artist_songs
   has_many :songs, :through => :artist_songs, dependent: :destroy
+  # has_many :words, through: :songs
 
-  def self.exists?(artist)
-    if Artist.find_by(name:artist) != true
-      current_artist = Artist.create(name:artist)
-    else
-      current_artist = Artist.find_by(name:artist)
-    end
-    self.get_songs!(current_artist.name)
+  after_create :search_rap_genius
+
+
+  # def self.exists?(artist)
+  #   if Artist.find_by(name:artist) != true
+  #     current_artist = Artist.create(name:artist)
+  #   else
+  #     current_artist = Artist.find_by(name:artist)
+  #   end
+  # end
+  private
+
+  def update_artist
+    ##checks for new songs against the db using the song.id
   end
 
-  def self.get_songs!(artist)
-    RapGenius::Client.access_token = 'xtN_egmb5AUedPvEWYlOR78Vj61nOut2x4dNOESPuyabOu09-ZSuqSbTB15xMaUB'
-    songs = RapGenius.search("ASAP")
-
-    @artist_songs={:artist=>"#{artist}", :song=>[]}
-    songs.each do |song|
-      @artist_songs[:song] << RapGenius::Song.find(song.id)
-      # puts rap_song.title
-      # @artist.songs.create(name:)
-    end
+  def self.create_song!
     # self.create_song!
     lyrics_url=@artist_songs[:song].first.document["response"]["song"]["bop_url"][/(?<=(\/http))(.*)(?=\?)/].gsub(/%3A/,"http:").gsub(/(%2F)/,"/")
     doc = Nokogiri::HTML(open("#{lyrics_url}"))
