@@ -5,6 +5,7 @@ require 'open-uri'
 class Artist < ActiveRecord::Base
   has_many :artist_songs
   has_many :songs, :through => :artist_songs, dependent: :destroy
+  # has_many :words, through: :songs
 
   after_create :search_rap_genius
 
@@ -17,14 +18,9 @@ class Artist < ActiveRecord::Base
   #   end
   # end
   private
-  def search_rap_genius
-    RapGenius::Client.access_token = 'xtN_egmb5AUedPvEWYlOR78Vj61nOut2x4dNOESPuyabOu09-ZSuqSbTB15xMaUB'
-    songs = RapGenius.search(self.name)
-    songs.each do |song|
-      ##if rg_id already exists then don't create a song
-      self.songs.create(name:song.title, rg_id:song.id) if song.title !=nil && song.id !=nil
-      # artist_songs[:song] << RapGenius::Song.find(song.id)
-    end
+
+  def update_artist
+    ##checks for new songs against the db using the song.id
   end
 
   def self.create_song!
