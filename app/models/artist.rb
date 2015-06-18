@@ -25,7 +25,6 @@ class Artist < ActiveRecord::Base
 
   def self.create_song!
     # self.create_song!
-    lyrics_url=@artist_songs[:song].first.document["response"]["song"]["bop_url"][/(?<=(\/http))(.*)(?=\?)/].gsub(/%3A/,"http:").gsub(/(%2F)/,"/")
     doc = Nokogiri::HTML(open("#{lyrics_url}"))
     lyrics = doc.css("div.lyrics").to_s.gsub(/<(.|\n)*?>/,"")
     # puts @artist_songs[:song].first.lines.

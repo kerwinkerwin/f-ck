@@ -1,7 +1,10 @@
+require 'nokogiri'
+require 'open-uri'
+
 class Song < ActiveRecord::Base
   has_many :artist_songs
   has_many :artists, :through => :artist_songs
-  after_create :url_scraper
+  after_create :url_scraper, :lyric_scraper, :build_lyrics
 
 private
     def url_scraper
@@ -15,11 +18,25 @@ private
     def lyric_scraper
       ##uses Nokogiri to scrape and return lyrics along with some
       ##gsub
-      @url
-      
+      doc = Nokogiri::HTML(open("#{@url}"))
+      @lyrics = doc.css("div.lyrics").to_s.gsub(/<(.|\n)*?>/,"")
     end
 
     def build_lyrics
+      string_song = @lyrics
+      string_song.gsub!(/\n/, " ").gsub!(/,/, " ")
+      num_hooks = (string_song.scan(/\[Hook]/).length)-1
+      hook = string_song[/(?<=\[Hook\])(.*)(?=\[Verse 1\])/]
+      string_song.gsub!(/\[Hook]*/, " ")
+      ## Problem with the hook, some songs have hooks, some have hooks by other
+      ## people, will have to figure out what to do. 
+      string_song << hook*num_hooks
+      string_song.gsub!(/\[(.*?)\]/, " ")
+      string_song_collection = string_song.split(" ").each do |word|
+        word.downcase!
+        word.gsub!(/[^0-9A-Za-z]/, '')
+      end
+      p string_song_collection
       ##Take the lyrics from lyric_scraper
       #Do some gsub to turn lyrics into array of lyrics
       # Save lyrics to db
