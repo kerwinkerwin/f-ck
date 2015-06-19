@@ -28,8 +28,18 @@ private
       num_hooks = (string_song.scan(/\[Hook]/).length)-1
       hook = string_song[/(?<=\[Hook\])(.*)(?=\[Verse 1\])/]
       string_song.gsub!(/\[Hook]*/, " ")
+
+      ##
+      .scan(/\[(.*?)\]/)  ## Returns any text within square brackets
+      .flatten
+      ["Verse 1: Drake", "Hook: Quavo", "Verse 2: Quavo", "Hook: Quavo", "Verse 3: Takeoff", "Hook: Quavo", "Verse 4: Offset", "Hook: Quavo"]
+      c.include?(["#{d[0]}"])
+      a = above
+      b = a.uniq
+
+      ##
       ## Problem with the hook, some songs have hooks, some have hooks by other
-      ## people, will have to figure out what to do. 
+      ## people, will have to figure out what to do.
       string_song << hook*num_hooks
       string_song.gsub!(/\[(.*?)\]/, " ")
       string_song_collection = string_song.split(" ").each do |word|
