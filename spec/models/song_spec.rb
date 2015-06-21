@@ -9,7 +9,7 @@ RSpec.describe Song, type: :model do
   end
   describe ".lyric_scraper" do
     xit "returns lyrics using Nokogiri" do
-      
+
     end
   end
 
