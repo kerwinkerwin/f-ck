@@ -5,9 +5,8 @@ require 'open-uri'
 class Artist < ActiveRecord::Base
   has_many :artist_songs
   has_many :songs, :through => :artist_songs, dependent: :destroy
+  has_many :words, :through => :songs
   # has_many :words, through: :songs
-
-  after_create :search_rap_genius
 
 
   # def self.exists?(artist)

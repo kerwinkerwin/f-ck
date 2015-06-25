@@ -4,21 +4,18 @@ require 'open-uri'
 class Song < ActiveRecord::Base
   has_many :artist_songs
   has_many :artists, :through => :artist_songs
+  has_many :song_words
+  has_many :words, :through => :song_words
   after_create :url_scraper, :lyric_scraper, :build_lyrics
 
 private
     def url_scraper
       song = RapGenius::Song.find(self.rg_id)
-
       @url = song.document["response"]["song"]["url"]
       self.update(url:@url)
-      ##Takes song.id
-      ##and returns url
     end
 
     def lyric_scraper
-      ##uses Nokogiri to scrape and return lyrics along with some
-      ##gsub
       doc = Nokogiri::HTML(open("#{@url}"))
       @lyrics = doc.css("div.lyrics").to_s.gsub(/<(.|\n)*?>/,"")
     end
