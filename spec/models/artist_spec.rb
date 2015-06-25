@@ -4,12 +4,17 @@ require 'spec_helper'
 RSpec.describe Artist, type: :model do
   context "on creation" do
     # Artist.create(name:'ASAP')
-    it "calls #get_songs callback", tag: [ :db ] do
+    xit "calls #get_songs callback", tag: [ :db ] do
       artist = FactoryGirl.build(:artist)
       expect{ artist.save }.to change{ artist.songs.count }.from(0)
       #How to test that the after hooks work?
       # allow(artist).to receive(:get_songs!).and_return("songs")
       # expect(artist.get_songs!).to eq("songs")
+    end
+    let(:artist){FactoryGirl.create(:artist)}
+    it "returns some info" do
+        artist.search
+        p artist.words
     end
   end
 

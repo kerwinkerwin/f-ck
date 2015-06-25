@@ -20,6 +20,28 @@ private
       @lyrics = doc.css("div.lyrics").to_s.gsub(/<(.|\n)*?>/,"")
     end
 
+    def build_lyrics
+      string_song = @lyrics
+      string_song.gsub!(/\n/, " ").gsub!(/,/, " ").gsub!(/\[(.*?)\]/, " ")
+      string_song_collection = string_song.split(" ").each do |word|
+        word.downcase!
+        word.gsub!(/[^0-9A-Za-z]/, '')
+      end
+      @lyrics = string_song_collection
+    end
+
+    def sort_lyrics
+      words = @lyrics.uniq
+      histogram = words.map{|word| [word.gsub(/\"/,""), @lyrics.count(word)]}.to_h
+      create_words(histogram)
+    end
+
+    def create_words(histogram)
+      histogram.each do |key,value|
+        self.words.create(name:key)
+      end
+    end
+
     def hook_counter
       ###THIS METHOD IS FOR STRETCH
       # .scan(/\[(.*?)\]/)  ## Returns any text within square brackets
@@ -39,31 +61,4 @@ private
 
     end
 
-    def build_lyrics
-      string_song = @lyrics
-      string_song.gsub!(/\n/, " ").gsub!(/,/, " ").gsub!(/\[(.*?)\]/, " ")
-      string_song_collection = string_song.split(" ").each do |word|
-        word.downcase!
-        word.gsub!(/[^0-9A-Za-z]/, '')
-      end
-
-      @lyrics = string_song_collection
-
-      ##Take the lyrics from lyric_scraper
-      #Do some gsub to turn lyrics into array of lyrics
-      # Save lyrics to db
-    end
-
-    def sort_lyrics
-      #sorts lyrics
-      words = @lyrics.uniq
-      histogram = words.map{|word| [word.gsub(/\"/,""), @lyrics.count(word)]}.to_h
-    end
-
-    def create_words
-      #takes lyrics and count array and creates words
-      #so can go Artist.song.words
-      #possibly source association?
-
-    end
 end
