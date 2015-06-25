@@ -18,9 +18,6 @@ private
     def lyric_scraper
       doc = Nokogiri::HTML(open("#{@url}"))
       @lyrics = doc.css("div.lyrics").to_s.gsub(/<(.|\n)*?>/,"")
-      puts "*************"
-      puts @lyrics
-      puts "*************"
     end
 
     def build_lyrics
@@ -42,7 +39,7 @@ private
 
     def create_words(histogram)
       histogram.each do |key,value|
-        self.words.create(name:key)
+        value.times{self.words.create(name:key)}
       end
     end
 
