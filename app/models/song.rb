@@ -6,7 +6,7 @@ class Song < ActiveRecord::Base
   has_many :artists, :through => :artist_songs
   has_many :song_words
   has_many :words, :through => :song_words
-  after_create :url_scraper, :lyric_scraper, :build_lyrics
+  after_create :url_scraper, :lyric_scraper, :build_lyrics, :sort_lyrics
 
 private
     def url_scraper
@@ -46,7 +46,9 @@ private
         word.downcase!
         word.gsub!(/[^0-9A-Za-z]/, '')
       end
-      p string_song_collections
+
+      @lyrics = string_song_collection
+
       ##Take the lyrics from lyric_scraper
       #Do some gsub to turn lyrics into array of lyrics
       # Save lyrics to db
@@ -54,6 +56,8 @@ private
 
     def sort_lyrics
       #sorts lyrics
+      words = @lyrics.uniq
+      histogram = words.map{|word| [word.gsub(/\"/,""), @lyrics.count(word)]}.to_h
     end
 
     def create_words
