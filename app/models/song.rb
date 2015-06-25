@@ -18,9 +18,13 @@ private
     def lyric_scraper
       doc = Nokogiri::HTML(open("#{@url}"))
       @lyrics = doc.css("div.lyrics").to_s.gsub(/<(.|\n)*?>/,"")
+      puts "*************"
+      puts @lyrics
+      puts "*************"
     end
 
     def build_lyrics
+      ## one/many songs are returning nil here, fuck!
       string_song = @lyrics
       string_song.gsub!(/\n/, " ").gsub!(/,/, " ").gsub!(/\[(.*?)\]/, " ")
       string_song_collection = string_song.split(" ").each do |word|

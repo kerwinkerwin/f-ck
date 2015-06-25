@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :artist do
-    name "ASAP"
+    name "Kendrick Lamar"
   end
 end

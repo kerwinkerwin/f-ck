@@ -6,7 +6,8 @@ class Artist < ActiveRecord::Base
   has_many :artist_songs
   has_many :songs, :through => :artist_songs, dependent: :destroy
   has_many :words, :through => :songs
-  # has_many :words, through: :songs
+  before_create :downcase
+  after_create :search
 
 
   # def self.exists?(artist)
@@ -16,12 +17,20 @@ class Artist < ActiveRecord::Base
   #     current_artist = Artist.find_by(name:artist)
   #   end
   # end
+  def update_artist(artist)
+    search(artist)
+  end
+
+  private
+
+  def downcase
+    self.name = self.name.downcase
+  end
+
   def search
     @songs = RapGenius.search(self.name)
     create_song
   end
-
-  private
 
   def create_song
     @songs.each do |song|
@@ -29,8 +38,6 @@ class Artist < ActiveRecord::Base
     end
   end
 
-  def update_artist
-    ##checks for new songs against the db using the song.id
-  end
+
 
 end
