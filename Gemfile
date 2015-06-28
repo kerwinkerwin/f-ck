@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', :groups => [:development, :test]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
+gem 'react-rails', '~> 1.0'
 gem "rapgenius", "1.1.1"
 gem 'nokogiri', '~> 1.6.6.2'
 # Use postgresql as the database for Active Record

@@ -34,10 +34,24 @@ class Artist < ActiveRecord::Base
 
   def create_song
     @songs.each do |song|
-      self.songs.create(name:song.title, rg_id:song.id)
+      if Song.find_by(rg_id:song.id) == nil
+        self.songs.create(name:song.title, rg_id:song.id)
+      end
     end
   end
 
+  def self.generate_data
+    data = []
+    Artist.all.each do |artist|
+      data << {artist:artist.name, words:sort_words(artist.words)}
+    end
+    return data
+  end
 
-
+  def self.sort_words(words)
+    word_count = words.map{|word|word.name}
+    uniq_words = word_count.uniq
+    word_counts = uniq_words.map{|word| [word, word_count.count(word)]}.to_h
+    word_counts.sort_by{|k, v| v}.reverse.to_h
+  end
 end

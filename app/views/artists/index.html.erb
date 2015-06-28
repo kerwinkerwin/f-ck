@@ -1,4 +1,10 @@
-<p> <%= @artist.name %> </p>
-<% @words.each do |word,amount| %>
-  <p><%= word %>:<%= amount%></p>
-<% end %>
+<!-- <%= react_component 'Words', { data: @words } %> -->
+
+<% @data.each do |artist| %>
+  <h1><%= artist[:artist]%></h1>
+  <ul>
+  <% artist[:words].each do |k,v|%>
+    <li><%= k %> : <%= v%></li>
+  <%end%>
+</ul>
+<%end%>

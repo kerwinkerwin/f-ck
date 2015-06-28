@@ -52,6 +52,7 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     columnize (0.9.0)
+    connection_pool (2.2.0)
     database_cleaner (1.4.1)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
@@ -130,6 +131,13 @@ GEM
     rapgenius (1.1.1)
       httparty (~> 0.11.0)
     rdoc (4.2.0)
+    react-rails (1.0.0)
+      coffee-script-source (~> 1.8)
+      connection_pool
+      execjs
+      rails (>= 3.1)
+      react-source (~> 0.13)
+    react-source (0.13.3)
     rspec-core (3.2.3)
       rspec-support (~> 3.2.0)
     rspec-expectations (3.2.1)
@@ -199,6 +207,7 @@ DEPENDENCIES
   pry-byebug
   rails (= 4.2.0)
   rapgenius (= 1.1.1)
+  react-rails (~> 1.0)
   rspec-rails (~> 3.2.1)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
