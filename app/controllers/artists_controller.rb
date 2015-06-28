@@ -4,10 +4,6 @@ class ArtistsController < ApplicationController
   end
 
   def show
+    Artist
   end
-
-  private
-
-
-
 end

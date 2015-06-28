@@ -41,11 +41,9 @@ class Artist < ActiveRecord::Base
   end
 
   def self.generate_data
-    data = []
-    Artist.all.each do |artist|
-      data << {artist:artist.name, words:sort_words(artist.words)}
+    Artist.all.map do |artist|
+      {artist:artist.name, words:sort_words(artist.words)}
     end
-    return data
   end
 
   def self.sort_words(words)
