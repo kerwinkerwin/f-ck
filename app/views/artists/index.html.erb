@@ -1,10 +1,11 @@
-<!-- <%= react_component 'Words', { data: @words } %> -->
 
-<% @data.each do |artist| %>
+<!-- <% @data.each do |artist| %>
   <h1><%= artist[:artist]%></h1>
   <ul>
   <% artist[:words].each do |k,v|%>
     <li><%= k %> : <%= v%></li>
   <%end%>
 </ul>
-<%end%>
+<%end%> -->
+<%= @artists.inspect %>
+<%= render partial: "artist", collection: @data%>

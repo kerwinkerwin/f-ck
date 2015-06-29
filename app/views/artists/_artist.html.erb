@@ -1,0 +1,33 @@
+<% @data.each do |artist| %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <%= artist[:artist]%>
+    </div>
+  </div>
+  <div class="row">
+    <%artist[:words].each do |k,v|%>
+      <div class="col-md-1">
+        <%=k%>
+      </div>
+      <div class="col-md-1">
+        <%=v%>
+      </div>
+    <%end%>
+  </div>
+</div>
+<%end%>
+
+
+
+
+
+
+<!-- <% @data.each do |artist| %>
+  <h1><%= artist[:artist]%></h1>
+  <ul>
+  <% artist[:words].each do |k,v|%>
+    <li><%= k %> : <%= v%></li>
+  <%end%>
+</ul>
+<%end%> -->
