@@ -21,3 +21,6 @@
  .navbar-brand{
    margin: 0 auto;
  }
+.navbar-default{
+  background-color: white;
+}

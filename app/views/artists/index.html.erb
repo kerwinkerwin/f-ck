@@ -1,11 +1,1 @@
-
-<!-- <% @data.each do |artist| %>
-  <h1><%= artist[:artist]%></h1>
-  <ul>
-  <% artist[:words].each do |k,v|%>
-    <li><%= k %> : <%= v%></li>
-  <%end%>
-</ul>
-<%end%> -->
-<%= @artists.inspect %>
-<%= render partial: "artist", collection: @data%>
+<%= render partial: "artist", collection: @artists%>

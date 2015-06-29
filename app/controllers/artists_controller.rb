@@ -1,10 +1,9 @@
 class ArtistsController < ApplicationController
   def index
-    @data = Artist.generate_all
-    @artists = Artist.all.pluck(:name)
+    @artists = Artist.all
   end
 
   def show
-    @data = Artist.generate(params[:artist])
+    @artist = Artist.find("?",params[:id])
   end
 end
