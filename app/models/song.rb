@@ -23,7 +23,8 @@ private
     def build_lyrics
       ## one/many songs are returning nil here, fuck!
       string_song = @lyrics
-      string_song.gsub!(/\n/, " ").gsub!(/,/, " ").gsub!(/\[(.*?)\]/, " ")
+      string_song.gsub!(/\n/, " ").gsub!(/,/, " ")
+      string_song.gsub!(/\[(.*?)\]/, " ") if string_song.include?("[")
       string_song_collection = string_song.split(" ").each do |word|
         word.downcase!
         word.gsub!(/[^0-9A-Za-z]/, '')

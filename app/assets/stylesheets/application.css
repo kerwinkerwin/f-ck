@@ -13,14 +13,30 @@
  *= require_tree .
  *= require_self
  */
+body{
+   padding-top:70px;
+   margin:0 auto;
+   padding-left: 8.5%;
+   padding-right: 8.5%;
+ }
+.indv-artist{
+  width:100%;
+  margin: 0 auto;
+  position: relative;
+}
+ html{
+   height:100%;
+   width:100%;
+ }
 .navbar-image{
   width:45px;
   height:25px;
   position: relative;
 }
- .navbar-brand{
-   margin: 0 auto;
+ .navbar-custom{
+   background-color: white;
+   height:8.5%;
  }
-.navbar-default{
-  background-color: white;
-}
+ .artist-img{
+   min-height: 250px;
+ }

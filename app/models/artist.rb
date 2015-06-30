@@ -1,4 +1,5 @@
 require 'rapgenius'
+require 'nokogiri'
 require 'open-uri'
 
 
@@ -6,7 +7,7 @@ class Artist < ActiveRecord::Base
   has_many :artist_songs
   has_many :songs, :through => :artist_songs, dependent: :destroy
   has_many :words, :through => :songs
-  before_create :downcase
+  before_create :downcase, :exists?
   after_create :search
 
 
@@ -22,13 +23,36 @@ class Artist < ActiveRecord::Base
   end
 
   private
+  def get_bio_url!
+    puts "get_bio"
+    # check through @songs[x]
+    # if self.name == @songs[x].artist.name.downcase return @songs[x].artist.url
+    bio_url = []
+    @songs.each do |song|
+      bio_url << song.artist.url if self.name == song.artist.name.downcase
+    end
+    get_bio(bio_url[0])
+  end
+
+  def get_bio(bio_url)
+    doc = Nokogiri::HTML(open("#{bio_url}"))
+    bio_s = doc.css("div.body_text")
+    bio = bio_s[0].children[1].children.map{|child|child.text}.join("")
+    self.update(bio: bio)
+  end
 
   def downcase
     self.name = self.name.downcase
   end
 
+  def exists?
+    return false if Artist.find_by(name:self.name) != nil
+  end
+
   def search
+    puts "search"
     @songs = RapGenius.search(self.name)
+    get_bio_url!
     create_song
   end
 
