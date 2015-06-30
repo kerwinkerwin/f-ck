@@ -31,10 +31,13 @@ class Artist < ActiveRecord::Base
     @songs.each do |song|
       bio_url << song.artist.url if self.name == song.artist.name.downcase
     end
+    p @songs
     get_bio(bio_url[0])
   end
 
   def get_bio(bio_url)
+    puts "get_bio2"
+    puts bio_url
     doc = Nokogiri::HTML(open("#{bio_url}"))
     bio_s = doc.css("div.body_text")
     bio = bio_s[0].children[1].children.map{|child|child.text}.join("")
@@ -52,6 +55,7 @@ class Artist < ActiveRecord::Base
   def search
     puts "search"
     @songs = RapGenius.search(self.name)
+    puts self.name
     get_bio_url!
     create_song
   end

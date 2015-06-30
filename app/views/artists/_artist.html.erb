@@ -1,4 +1,3 @@
-<div class="col-md-4 indv-artist">
-    <%=artist.name%>
-    <img src="<%=artist.img%>" class="img-responsive artist-img"></img>
+<div class="col-md-4 indv-artist no-pad">
+    <%= link_to image_tag("#{artist.img}", :class=>"img-responsive artist-img"), artist_path(artist)%>
 </div>

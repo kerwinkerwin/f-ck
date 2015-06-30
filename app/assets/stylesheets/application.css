@@ -40,3 +40,6 @@ body{
  .artist-img{
    min-height: 250px;
  }
+.no-pad{
+  padding:0;
+}
