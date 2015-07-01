@@ -64,9 +64,10 @@ class Artist < ActiveRecord::Base
   end
 
   def self.generate(artist)
-  Artist.find_by(name:artist).map do |artist|
+    artist= Artist.find_by(name:artist)
+  # Artist.find_by(name:artist).map do |artist|
       {artist:artist.name, words:sort_words(artist.words)}
-    end
+    # end
   end
 
   def self.generate_all
