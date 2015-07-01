@@ -67,9 +67,16 @@ body{
   font-size: 1.3em;
 }
 
+.lexicon-cont{
+  float:none;
+}
+
 @media (min-width: 800px){
   .artist-bio{
     padding-left: 30px;
+  }
+  .lexicon-cont{
+    float:right;
   }
   .artist-bio p{
     font-size: 1.3em;

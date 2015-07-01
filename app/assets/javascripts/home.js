@@ -1,7 +1,4 @@
 $(document).ready(function(){
-  // $(".artist-img").mouseover(function(e){
-  //   imageHover(e)
-  // });
   $(".artist-img").hover(
     function() {
       $( this ).addClass( "img_hover" );
@@ -10,7 +7,7 @@ $(document).ready(function(){
     }
   );
 
-
+  
 });
 
 function imageHover(e){

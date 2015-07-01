@@ -5,8 +5,6 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
-    p @artist.name
     @object = Artist.generate(@artist.name)
-    render
   end
 end
