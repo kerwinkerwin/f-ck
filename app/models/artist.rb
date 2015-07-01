@@ -24,20 +24,15 @@ class Artist < ActiveRecord::Base
 
   private
   def get_bio_url!
-    puts "get_bio"
-    # check through @songs[x]
-    # if self.name == @songs[x].artist.name.downcase return @songs[x].artist.url
     bio_url = []
     @songs.each do |song|
       bio_url << song.artist.url if self.name == song.artist.name.downcase
     end
-    p @songs
+    @songs
     get_bio(bio_url[0])
   end
 
   def get_bio(bio_url)
-    puts "get_bio2"
-    puts bio_url
     doc = Nokogiri::HTML(open("#{bio_url}"))
     bio_s = doc.css("div.body_text")
     bio = bio_s[0].children[1].children.map{|child|child.text}.join("")

@@ -1,0 +1,7 @@
+<div class="col-md-9 indv-artist-img no-pad">
+    <%= link_to image_tag("#{artist.img}", :class=>"img-responsive img-profile", :id=>"#{artist.name}-image"), artist_path(artist)%>
+</div>
+<div class="col-md-3 indv-artist-bio no-pad artist-bio">
+  <h1><%= artist.name %></h1>
+  <div><%= simple_format(artist.bio)%></div>
+</div>

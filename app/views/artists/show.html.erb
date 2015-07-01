@@ -1,1 +1,5 @@
-<%= render @artist %>
+<div class="container-fluid artist-bio">
+  <div class="row">
+    <%= render partial: "artist_info", locals: {artist:@artist} %>
+  </div>
+</div>
