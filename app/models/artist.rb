@@ -10,14 +10,6 @@ class Artist < ActiveRecord::Base
   before_create :downcase, :exists?
   after_create :search
 
-
-  # def self.exists?(artist)
-  #   if Artist.find_by(name:artist) != true
-  #     current_artist = Artist.create(name:artist)
-  #   else
-  #     current_artist = Artist.find_by(name:artist)
-  #   end
-  # end
   def update_artist(artist)
     search(artist)
   end

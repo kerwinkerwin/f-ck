@@ -7,7 +7,7 @@ $(document).ready(function(){
     }
   );
 
-  
+
 });
 
 function imageHover(e){

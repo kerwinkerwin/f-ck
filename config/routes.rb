@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'words/show'
 
   get 'words/index'
+  get 'artists/data', :defaults => { :format => 'json' }
 
   resources :artists, only: [:index,:show] do
     resources :words, only: [:index,:show]
